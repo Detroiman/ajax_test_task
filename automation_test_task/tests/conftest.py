@@ -21,11 +21,12 @@ def setup_appium():
     time.sleep(5)
 
 
-@pytest.fixture(scope='session')
+@pytest.yield_fixture(autouse=True, scope='session')
 def driver(setup_appium):
     driver = webdriver.Remote('http://localhost:4723/wd/hub', android_get_desired_cap())
 
     yield driver
+    driver.quit()
 
 
 @pytest.fixture(scope='session')
